@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -19,10 +20,10 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     indexes = {
-        @Index(columnList = "content"),
         @Index(columnList = "timestamp")
     }
 )
@@ -34,9 +35,9 @@ public class Post {
   private Long postId;
 
   @NonNull
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(nullable = false, updatable = false)
-  private Long userId;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  private User user;
 
   @NonNull
   @Column(nullable = false)
@@ -47,7 +48,6 @@ public class Post {
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
-  @OrderBy("order DESC")
   private Date timestamp;
 
   public Long getPostId() {
@@ -55,10 +55,13 @@ public class Post {
   }
 
   @NonNull
-  public Long getUserId() {
-    return userId;
+  public User getUser() {
+    return user;
   }
 
+  public void setUser(@NonNull User user) {
+    this.user = user;
+  }
 
   @NonNull
   public String getContent() {

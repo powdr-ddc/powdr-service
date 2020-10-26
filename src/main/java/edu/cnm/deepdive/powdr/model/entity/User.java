@@ -1,10 +1,14 @@
 package edu.cnm.deepdive.powdr.model.entity;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -25,13 +29,14 @@ public class User {
   @Nullable
   private String bio;
 
-  @Nullable
-  private String post;
-
   @NonNull
   @Column(nullable = false)
   private String name;
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OrderBy("timestamp DESC")
+  private List<Post> posts;
+  
   //private BLOB PICTURE
 
   public Long getUserId() {
@@ -60,11 +65,7 @@ public class User {
     this.name = name;
   }
 
-  public String getPost() {
-    return post;
-  }
-
-  public void setPost(String post) {
-    this.post = post;
+  public List<Post> getPosts() {
+    return posts;
   }
 }
