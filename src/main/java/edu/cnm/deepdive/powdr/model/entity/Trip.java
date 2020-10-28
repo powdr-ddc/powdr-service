@@ -40,10 +40,12 @@ public class Trip {
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
+  @Column(nullable = false, updatable = false)
   private Date start;
 
   @NonNull
   @Temporal(TemporalType.TIMESTAMP)
+  @Column(nullable = false)
   private Date end;
 
   @NonNull

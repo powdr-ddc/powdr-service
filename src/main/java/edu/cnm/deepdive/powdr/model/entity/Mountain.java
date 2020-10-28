@@ -12,6 +12,7 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.springframework.lang.NonNull;
@@ -35,19 +36,12 @@ public class Mountain {
   @Column(nullable = false, updatable = false, unique = true, length = 100)
   private String name;
 
+  @OneToMany(mappedBy = "mountain", cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<FavoriteMountain> favoriteMountains = new LinkedList<>();
+
   private double latitude;
 
   private double longitude;
-
-  @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinTable(joinColumns = @JoinColumn(name = "mountain_id"),
-      inverseJoinColumns = @JoinColumn(name = "user_id"))
-  @OrderBy("name ASC")
-  private List<User> users = new LinkedList<>();
-
-  public List<User> getUsers() {
-    return users;
-  }
 
   public Long getMountainId() {
     return mountainId;
@@ -72,5 +66,9 @@ public class Mountain {
 
   public void setLongitude(double longitude) {
     this.longitude = longitude;
+  }
+
+  public List<FavoriteMountain> getFavoriteMountains() {
+    return favoriteMountains;
   }
 }

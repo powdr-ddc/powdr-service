@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -17,38 +19,45 @@ public class Friendship {
   @Column(name = "friendship_id", nullable = false, updatable = false)
   private Long friendshipId;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "requester_id", nullable = false, updatable = false)
-  private Long requesterId;
+  @NonNull
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  private User requester;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "confirmer_id", nullable = false, updatable = false)
-  private Long confirmerId;
+  @NonNull
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  private User confirmer;
 
-  @Nullable
   private boolean confirmed;
 
   public Long getFriendshipId() {
     return friendshipId;
   }
 
-  public Long getRequesterId() {
-    return requesterId;
+  @NonNull
+  public User getRequester() {
+    return requester;
   }
 
-  public Long getConfirmerId() {
-    return confirmerId;
+  public void setRequester(@NonNull User requester) {
+    this.requester = requester;
+  }
+
+  @NonNull
+  public User getConfirmer() {
+    return confirmer;
+  }
+
+  public void setConfirmer(@NonNull User confirmer) {
+    this.confirmer = confirmer;
   }
 
   public boolean isConfirmed() {
     return confirmed;
   }
 
-  @NonNull
   public void setConfirmed(boolean confirmed) {
     this.confirmed = confirmed;
   }
-
 }

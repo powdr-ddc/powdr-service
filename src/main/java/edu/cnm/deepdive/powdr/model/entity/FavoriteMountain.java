@@ -34,6 +34,7 @@ public class FavoriteMountain {
   @JoinColumn(name = "mountain_id", nullable = false, updatable = false)
   private Mountain mountain;
 
+
   public Long getId() {
     return id;
   }

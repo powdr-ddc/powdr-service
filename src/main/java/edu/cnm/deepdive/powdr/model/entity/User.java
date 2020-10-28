@@ -8,9 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import net.minidev.json.annotate.JsonIgnore;
@@ -40,19 +37,38 @@ public class User {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("timestamp DESC")
-  private List<Post> posts;
+  private final List<Post> posts = new LinkedList<>();
 
-  @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
-      inverseJoinColumns = @JoinColumn(name = "mountain_id"))
-  @OrderBy("name ASC")
-  private List<Mountain> mountains = new LinkedList<>();
+  @NonNull
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<FavoriteMountain> favoriteMountains = new LinkedList<>();
+
+  @NonNull
+  @OneToMany(mappedBy = "user")
+  private final List<Trip> trips = new LinkedList<>();
+
+  @NonNull
+  @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<Message> messageSender = new LinkedList<>();
+
+  @NonNull
+  @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<Message> messageReceiver = new LinkedList<>();
+
+  @NonNull
+  @OneToMany(mappedBy = "confirmer", cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<Friendship> friendConfirmer = new LinkedList<>();
+
+  @NonNull
+  @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<Friendship> friendRequster = new LinkedList<>();
+
 
   //private BLOB PICTURE
 
 
-  public List<Mountain> getMountains() {
-    return mountains;
+  public List<FavoriteMountain> getFavoriteMountains() {
+    return favoriteMountains;
   }
 
   public Long getUserId() {
@@ -83,5 +99,30 @@ public class User {
 
   public List<Post> getPosts() {
     return posts;
+  }
+
+  @NonNull
+  public List<Trip> getTrips() {
+    return trips;
+  }
+
+  @NonNull
+  public List<Message> getMessageSender() {
+    return messageSender;
+  }
+
+  @NonNull
+  public List<Message> getMessageReceiver() {
+    return messageReceiver;
+  }
+
+  @NonNull
+  public List<Friendship> getFriendConfirmer() {
+    return friendConfirmer;
+  }
+
+  @NonNull
+  public List<Friendship> getFriendRequster() {
+    return friendRequster;
   }
 }
