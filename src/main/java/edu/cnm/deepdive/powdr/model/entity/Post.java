@@ -43,7 +43,7 @@ public class Post {
   @Column(nullable = false)
   private String content;
 
-  // private pictures
+  private String imagePath;
 
   @NonNull
   @CreationTimestamp
@@ -77,4 +77,11 @@ public class Post {
     return timestamp;
   }
 
+  public String getImagePath() {
+    return imagePath;
+  }
+
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
+  }
 }

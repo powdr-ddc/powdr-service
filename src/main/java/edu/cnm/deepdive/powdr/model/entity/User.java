@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.powdr.model.entity;
 
+import java.sql.Blob;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import net.minidev.json.annotate.JsonIgnore;
@@ -28,8 +30,9 @@ public class User {
   @JsonIgnore
   private String oauthKey;
 
-  @Nullable
   private String bio;
+
+  private String imagePath;
 
   @NonNull
   @Column(nullable = false)
@@ -63,10 +66,6 @@ public class User {
   @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<Friendship> friendRequster = new LinkedList<>();
 
-
-  //private BLOB PICTURE
-
-
   public List<FavoriteMountain> getFavoriteMountains() {
     return favoriteMountains;
   }
@@ -95,6 +94,14 @@ public class User {
 
   public void setName(@NonNull String name) {
     this.name = name;
+  }
+
+  public String getImagePath() {
+    return imagePath;
+  }
+
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
   }
 
   public List<Post> getPosts() {
