@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.powdr.model.entity;
 
-import java.sql.Blob;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -9,12 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
@@ -44,7 +41,7 @@ public class User {
 
   @NonNull
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  private final List<FavoriteMountain> favoriteMountains = new LinkedList<>();
+  private final List<FavoriteSkiResort> favoriteSkiResorts = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "user")
@@ -66,8 +63,8 @@ public class User {
   @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<Friendship> friendRequster = new LinkedList<>();
 
-  public List<FavoriteMountain> getFavoriteMountains() {
-    return favoriteMountains;
+  public List<FavoriteSkiResort> getFavoriteSkiResort() {
+    return favoriteSkiResorts;
   }
 
   public Long getUserId() {

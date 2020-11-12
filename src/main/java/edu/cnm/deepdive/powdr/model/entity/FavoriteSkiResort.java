@@ -17,11 +17,11 @@ import org.springframework.lang.NonNull;
     uniqueConstraints =
         @UniqueConstraint(columnNames = {"user_id", "mountain_id"})
 )
-public class FavoriteMountain {
+public class FavoriteSkiResort {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "favorite_mountain_id", nullable = false, updatable = false)
+  @Column(name = "favorite_ski_resort_id", nullable = false, updatable = false)
   private Long id;
 
   @NonNull
@@ -31,8 +31,8 @@ public class FavoriteMountain {
 
   @NonNull
   @ManyToOne
-  @JoinColumn(name = "mountain_id", nullable = false, updatable = false)
-  private Mountain mountain;
+  @JoinColumn(name = "ski_resort_id", nullable = false, updatable = false)
+  private SkiResort skiResort;
 
 
   public Long getId() {
@@ -49,11 +49,11 @@ public class FavoriteMountain {
   }
 
   @NonNull
-  public Mountain getMountain() {
-    return mountain;
+  public SkiResort getSkiResort() {
+    return skiResort;
   }
 
-  public void setMountain(@NonNull Mountain mountain) {
-    this.mountain = mountain;
+  public void setSkiResort(@NonNull SkiResort skiResort) {
+    this.skiResort = skiResort;
   }
 }
