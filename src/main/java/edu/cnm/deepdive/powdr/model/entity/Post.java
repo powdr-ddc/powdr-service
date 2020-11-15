@@ -10,13 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
@@ -43,7 +39,7 @@ public class Post {
   @Column(nullable = false)
   private String content;
 
-  // private pictures
+  private String imagePath;
 
   @NonNull
   @CreationTimestamp
@@ -77,4 +73,11 @@ public class Post {
     return timestamp;
   }
 
+  public String getImagePath() {
+    return imagePath;
+  }
+
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
+  }
 }

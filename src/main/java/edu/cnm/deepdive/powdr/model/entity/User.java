@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
@@ -28,8 +27,9 @@ public class User {
   @JsonIgnore
   private String oauthKey;
 
-  @Nullable
   private String bio;
+
+  private String imagePath;
 
   @NonNull
   @Column(nullable = false)
@@ -41,7 +41,7 @@ public class User {
 
   @NonNull
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  private final List<FavoriteMountain> favoriteMountains = new LinkedList<>();
+  private final List<FavoriteSkiResort> favoriteSkiResorts = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "user")
@@ -63,12 +63,8 @@ public class User {
   @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<Friendship> friendRequster = new LinkedList<>();
 
-
-  //private BLOB PICTURE
-
-
-  public List<FavoriteMountain> getFavoriteMountains() {
-    return favoriteMountains;
+  public List<FavoriteSkiResort> getFavoriteSkiResort() {
+    return favoriteSkiResorts;
   }
 
   public Long getUserId() {
@@ -95,6 +91,14 @@ public class User {
 
   public void setName(@NonNull String name) {
     this.name = name;
+  }
+
+  public String getImagePath() {
+    return imagePath;
+  }
+
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
   }
 
   public List<Post> getPosts() {

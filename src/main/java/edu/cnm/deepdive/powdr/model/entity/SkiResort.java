@@ -9,11 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.springframework.lang.NonNull;
 
@@ -25,26 +21,26 @@ import org.springframework.lang.NonNull;
         @Index(columnList = "longitude")
     }
 )
-public class Mountain {
+public class SkiResort {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(nullable = false, updatable = false)
-  private Long mountainId;
+  private Long skiResortId;
 
   @NonNull
   @Column(nullable = false, updatable = false, unique = true, length = 100)
   private String name;
 
-  @OneToMany(mappedBy = "mountain", cascade = CascadeType.ALL, orphanRemoval = true)
-  private final List<FavoriteMountain> favoriteMountains = new LinkedList<>();
+  @OneToMany(mappedBy = "ski_resort", cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<FavoriteSkiResort> favoriteSkiResorts = new LinkedList<>();
 
   private double latitude;
 
   private double longitude;
 
-  public Long getMountainId() {
-    return mountainId;
+  public Long getSkiResortId() {
+    return skiResortId;
   }
 
   @NonNull
@@ -68,7 +64,7 @@ public class Mountain {
     this.longitude = longitude;
   }
 
-  public List<FavoriteMountain> getFavoriteMountains() {
-    return favoriteMountains;
+  public List<FavoriteSkiResort> getFavoriteSkiResorts() {
+    return favoriteSkiResorts;
   }
 }

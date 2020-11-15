@@ -21,12 +21,12 @@ public class Friendship {
 
   @NonNull
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "requester_id", nullable = false, updatable = false)
   private User requester;
 
   @NonNull
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "confirmer_id", nullable = false, updatable = false)
   private User confirmer;
 
   private boolean confirmed;

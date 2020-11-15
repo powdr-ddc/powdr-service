@@ -31,12 +31,12 @@ public class Message {
 
   @NonNull
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "sender_id", nullable = false, updatable = false)
   private User sender;
 
   @NonNull
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "receiver_id", nullable = false, updatable = false)
   private User receiver;
 
   @NonNull
