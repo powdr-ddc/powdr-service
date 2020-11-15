@@ -2,6 +2,7 @@ package edu.cnm.deepdive.powdr.model.entity;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -18,9 +20,11 @@ import org.springframework.lang.NonNull;
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(nullable = false, updatable = false)
-  private Long userId;
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid")
+  @Column(nullable = false, updatable = false,
+      columnDefinition = "CHAR(16) FOR BIT DATA")
+  private UUID userId;
 
   @NonNull
   @Column(nullable = false, updatable = false, unique = true)
@@ -67,7 +71,7 @@ public class User {
     return favoriteSkiResorts;
   }
 
-  public Long getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 

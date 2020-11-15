@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.powdr.model.entity;
 
 import com.sun.istack.Nullable;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -15,9 +17,11 @@ import org.springframework.lang.NonNull;
 public class Friendship {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "friendship_id", nullable = false, updatable = false)
-  private Long friendshipId;
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(nullable = false, updatable = false,
+      columnDefinition = "CHAR(16) FOR BIT DATA")
+  private UUID friendshipId;
 
   @NonNull
   @ManyToOne
@@ -31,7 +35,7 @@ public class Friendship {
 
   private boolean confirmed;
 
-  public Long getFriendshipId() {
+  public UUID getFriendshipId() {
     return friendshipId;
   }
 

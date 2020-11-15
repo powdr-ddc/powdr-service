@@ -2,6 +2,7 @@ package edu.cnm.deepdive.powdr.model.entity;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     indexes = {
+        @Index(columnList = "name"),
         @Index(columnList = "latitude"),
         @Index(columnList = "longitude")
     }
@@ -24,9 +27,11 @@ import org.springframework.lang.NonNull;
 public class SkiResort {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(nullable = false, updatable = false)
-  private Long skiResortId;
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(nullable = false, updatable = false,
+      columnDefinition = "CHAR(16) FOR BIT DATA")
+  private UUID skiResortId;
 
   @NonNull
   @Column(nullable = false, updatable = false, unique = true, length = 100)
@@ -39,7 +44,7 @@ public class SkiResort {
 
   private double longitude;
 
-  public Long getSkiResortId() {
+  public UUID getSkiResortId() {
     return skiResortId;
   }
 

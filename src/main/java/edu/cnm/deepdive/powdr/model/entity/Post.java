@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.powdr.model.entity;
 
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -26,9 +28,11 @@ import org.springframework.lang.NonNull;
 public class Post {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(nullable = false, updatable = false)
-  private Long postId;
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(nullable = false, updatable = false,
+      columnDefinition = "CHAR(16) FOR BIT DATA")
+  private UUID postId;
 
   @NonNull
   @ManyToOne(fetch = FetchType.EAGER)
@@ -46,7 +50,7 @@ public class Post {
   @Temporal(TemporalType.TIMESTAMP)
   private Date timestamp;
 
-  public Long getPostId() {
+  public UUID getPostId() {
     return postId;
   }
 

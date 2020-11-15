@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.powdr.model.entity;
 
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -20,9 +22,11 @@ import org.springframework.lang.NonNull;
 public class FavoriteSkiResort {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "favorite_ski_resort_id", nullable = false, updatable = false)
-  private Long id;
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(nullable = false, updatable = false,
+      columnDefinition = "CHAR(16) FOR BIT DATA")
+  private UUID id;
 
   @NonNull
   @ManyToOne
@@ -35,7 +39,7 @@ public class FavoriteSkiResort {
   private SkiResort skiResort;
 
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
