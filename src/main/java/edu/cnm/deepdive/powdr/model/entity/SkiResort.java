@@ -37,7 +37,8 @@ public class SkiResort {
   @Column(nullable = false, updatable = false, unique = true, length = 100)
   private String name;
 
-  @OneToMany(mappedBy = "ski_resort_id", cascade = CascadeType.ALL, orphanRemoval = true)
+  @NonNull
+  @OneToMany(mappedBy = "skiResort", cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<FavoriteSkiResort> favoriteSkiResorts = new LinkedList<>();
 
   private double latitude;
@@ -69,6 +70,7 @@ public class SkiResort {
     this.longitude = longitude;
   }
 
+  @NonNull
   public List<FavoriteSkiResort> getFavoriteSkiResorts() {
     return favoriteSkiResorts;
   }

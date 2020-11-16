@@ -11,12 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
+@Table(name = "user_profile")
 public class User {
 
   @Id

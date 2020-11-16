@@ -22,8 +22,8 @@ import org.springframework.lang.NonNull;
 @Entity
 @Table(
     indexes = {
-        @Index(columnList = "start_time"),
-        @Index(columnList = "end_time"),
+        @Index(columnList = "startTime"),
+        @Index(columnList = "endTime"),
         @Index(columnList = "distance")
     }
 )
@@ -44,12 +44,12 @@ public class Trip {
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
-  private Date start;
+  private Date startTime;
 
   @NonNull
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false)
-  private Date end;
+  private Date endTime;
 
   @NonNull
   @Column(nullable = false)
@@ -69,13 +69,13 @@ public class Trip {
   }
 
   @NonNull
-  public Date getStart() {
-    return start;
+  public Date getStartTime() {
+    return startTime;
   }
 
   @NonNull
-  public Date getEnd() {
-    return end;
+  public Date getEndTime() {
+    return endTime;
   }
 
   public float getDistance() {
