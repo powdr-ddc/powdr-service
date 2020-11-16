@@ -17,7 +17,7 @@ import org.springframework.lang.NonNull;
 @Entity
 @Table(
     uniqueConstraints =
-        @UniqueConstraint(columnNames = {"user_id", "mountain_id"})
+        @UniqueConstraint(columnNames = {"user_id", "ski_resort_id"})
 )
 public class FavoriteSkiResort {
 

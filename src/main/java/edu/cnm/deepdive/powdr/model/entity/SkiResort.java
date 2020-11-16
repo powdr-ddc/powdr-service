@@ -37,7 +37,7 @@ public class SkiResort {
   @Column(nullable = false, updatable = false, unique = true, length = 100)
   private String name;
 
-  @OneToMany(mappedBy = "ski_resort", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "ski_resort_id", cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<FavoriteSkiResort> favoriteSkiResorts = new LinkedList<>();
 
   private double latitude;

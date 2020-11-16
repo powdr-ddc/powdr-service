@@ -80,6 +80,10 @@ public class User {
     return oauthKey;
   }
 
+  public void setOauthKey(@NonNull String oauthKey) {
+    this.oauthKey = oauthKey;
+  }
+
   public String getBio() {
     return bio;
   }
