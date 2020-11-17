@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.powdr.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
@@ -23,7 +23,7 @@ public class User {
 
   @Id
   @GeneratedValue(generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(nullable = false, updatable = false,
       columnDefinition = "CHAR(16) FOR BIT DATA")
   private UUID userId;
@@ -43,33 +43,40 @@ public class User {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("timestamp DESC")
+  @JsonIgnore
   private final List<Post> posts = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private final List<FavoriteSkiResort> favoriteSkiResorts = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "user")
+  @JsonIgnore
   private final List<Trip> trips = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private final List<Message> messageSender = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private final List<Message> messageReceiver = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "confirmer", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private final List<Friendship> friendConfirmer = new LinkedList<>();
 
   @NonNull
   @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private final List<Friendship> friendRequster = new LinkedList<>();
 
-  public List<FavoriteSkiResort> getFavoriteSkiResort() {
+  public List<FavoriteSkiResort> getFavoriteSkiResorts() {
     return favoriteSkiResorts;
   }
 
