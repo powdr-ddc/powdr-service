@@ -18,6 +18,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
+/**
+ * Post entity in the database to store information regarding the posts users can make to the
+ * community wall. The posts will have information in regards to the creation date for the content/
+ * pictures a user may post.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(

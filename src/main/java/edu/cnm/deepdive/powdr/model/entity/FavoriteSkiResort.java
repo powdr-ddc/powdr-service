@@ -14,6 +14,10 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
+/**
+ * Favorite Ski Resort joint entity in the database to join the {@link User} entity and {@link SkiResort}
+ * entity to allow a user to save a specific ski resort to their favorites for easy access.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(

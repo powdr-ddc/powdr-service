@@ -5,6 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 
+/**
+ * The main class for the Powdr webservice that allows the server to run through Spring.
+ *
+ * @author Adrian Anaya
+ * @author Jonah Rodriguez
+ * @author Austin West
+ */
 @EnableHypermediaSupport(type = {HypermediaType.HAL})
 @SpringBootApplication
 public class PowdrApplication {

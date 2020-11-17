@@ -16,6 +16,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
+/**
+ * User entity in the database to store information in regards to various users such as:
+ * User ID, OAuthKey, their name, a biography section, and an image path for the user pictures.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "user_profile")

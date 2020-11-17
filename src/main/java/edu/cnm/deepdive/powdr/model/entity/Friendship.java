@@ -12,6 +12,11 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
+/**
+ * Friendship entity in the database to store information that allows users to friend each other.
+ * There is the requester--the person who sent the friend request--and the confirmer, who must
+ * confirm the requesters friend request.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Friendship {

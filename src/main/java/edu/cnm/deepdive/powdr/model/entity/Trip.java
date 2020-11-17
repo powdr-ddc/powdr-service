@@ -18,6 +18,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
+/**
+ * Trip entity in the database to store information regarding a trip for a user such as the start
+ * time and end time of a trip to log the total number of days on the mountain, and distance
+ * traveled to see the total distance logged for a trip.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(

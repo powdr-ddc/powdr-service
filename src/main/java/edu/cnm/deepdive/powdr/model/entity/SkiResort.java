@@ -15,6 +15,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
+/**
+ * Ski Resort entity in the database to store information regarding a ski resort such as the ski
+ * resort name, and the latitude and longitude to pinpoint a specific ski resort, since multiple
+ * resorts can be on a single mountain.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(

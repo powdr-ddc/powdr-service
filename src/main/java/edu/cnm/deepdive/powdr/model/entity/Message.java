@@ -17,6 +17,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
+/**
+ * Message entity to store information in regard to the messages a user may send to other people
+ * such as the sender/receiver, and the time it was created.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(

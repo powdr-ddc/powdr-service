@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Repositories are basic update insert delete. Controller is the business logic for the repository.
+ */
 @RestController
 @RequestMapping("/users")
 @ExposesResourceFor(User.class)
