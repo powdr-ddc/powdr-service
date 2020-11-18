@@ -13,7 +13,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface SkiResortRepository  extends JpaRepository<SkiResort, UUID> {
 
+  /**
+   * Retrieves a list of {@link SkiResort} according to it's location via latitude and longitude.
+   * @param latitude Latitude of {@link SkiResort} location.
+   * @param longitude Longitude of {@link SkiResort} location.
+   * @return A list of ski resorts.
+   */
   List<SkiResort> getByLatitudeAndLongitude(double latitude, double longitude);
 
+  /**
+   * Retrieves a list of ski resorts according to their name.
+   * @param name Name of {@link SkiResort}
+   * @return A list of ski resorts.
+   */
   List<SkiResort> getByName(String name);
 }

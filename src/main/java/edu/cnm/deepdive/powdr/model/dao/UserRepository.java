@@ -20,5 +20,10 @@ public interface UserRepository extends JpaRepository<User, UUID> {
    */
   Optional<User> findFirstByOauthKey(String oauthKey);
 
+  /**
+   * Retrieves a user by their name.
+   * @param name Name of {@link User}
+   * @return A list of users.
+   */
   List<User> findByName(String name);
 }

@@ -22,7 +22,17 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
    */
   List<Post> getAllByUser(User user);
 
+  /**
+   * Gets a list of posts by a keyword specified by the {@link User}
+   * @param keyword The keyword used to search the content of a post
+   * @return A list of {@link Post}
+   */
   List<Post> findPostByContentNotContains(String keyword);
 
+  /**
+   * Gets a list of posts according to a specific timestamp
+   * @param timestamp Timestamp to be used to search for {@link Post}
+   * @return A list of {@link Post}
+   */
   List<Post> findPostByTimestamp(Date timestamp);
 }
