@@ -33,16 +33,20 @@ public class SkiResortController {
     this.skiResortService = skiResortService;
   }
 
-  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-      consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.CREATED)
-  public SkiResort post(@RequestBody SkiResort skiResort, Authentication auth) {
-    return skiResortService.save(skiResort, (User) auth.getPrincipal());
-  }
-
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<SkiResort> getAll(Authentication auth) {
     return skiResortService.getAll();
+  }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public SkiResort getByLatitudeAndLongitude(@RequestBody double latitude,
+      @RequestBody double longitude, Authentication auth) {
+    return skiResortService.getByLatitudeAndLongitude(latitude, longitude);
+  }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<SkiResort> getByName(@RequestBody String name, Authentication auth) {
+    return skiResortService.getByName(name);
   }
 
   @GetMapping(value = "/{skiResortId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,24 +55,37 @@ public class SkiResortController {
         .orElseThrow(NoSuchElementException::new);
   }
 
-  @DeleteMapping(value = "/{skiResortId}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable UUID skiResortId, Authentication auth) {
-    skiResortService.get(skiResortId)
-        .ifPresent(skiResortService::delete);
-  }
 
-  @PutMapping(value = "/{skiResortId}/favorite", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE},
-  consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
-  public boolean setFavorite(@PathVariable UUID skiResortId, @RequestBody boolean favorite, Authentication auth) {
+  @PutMapping(value = "/{skiResortId}/favorite",
+      produces = {
+          MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE},
+      consumes = {
+          MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+  public boolean setFavorite(@PathVariable UUID skiResortId, @RequestBody boolean favorite,
+      Authentication auth) {
     skiResortService.get(skiResortId)
         .ifPresentOrElse(
-            (skiResort) -> skiResortService.setFavorite(skiResort, favorite, (User) auth.getPrincipal()),
+            (skiResort) -> skiResortService
+                .setFavorite(skiResort, favorite, (User) auth.getPrincipal()),
             () -> {
               throw new NoSuchElementException();
             }
         );
     return favorite;
+  }
+
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.CREATED)
+  public SkiResort post(@RequestBody SkiResort skiResort, Authentication auth) {
+    return skiResortService.save(skiResort, (User) auth.getPrincipal());
+  }
+
+  @DeleteMapping(value = "/{skiResortId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable UUID skiResortId, Authentication auth) {
+    skiResortService.get(skiResortId)
+        .ifPresent(skiResortService::delete);
   }
 
 }

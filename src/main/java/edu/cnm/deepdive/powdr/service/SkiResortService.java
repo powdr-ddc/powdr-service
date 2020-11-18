@@ -39,6 +39,14 @@ public class SkiResortService {
     return skiResortRepository.findById(id);
   }
 
+  public SkiResort getByLatitudeAndLongitude(double latitude, double longitude) {
+    return skiResortRepository.getByLatitudeAndLongitude(latitude, longitude);
+  }
+
+  public List<SkiResort> getByName(String name) {
+    return skiResortRepository.getByName(name);
+  }
+
   public void delete(SkiResort skiResort) {
     skiResortRepository.delete(skiResort);
   }
