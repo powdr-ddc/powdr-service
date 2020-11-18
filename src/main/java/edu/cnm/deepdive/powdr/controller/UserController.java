@@ -1,11 +1,14 @@
 package edu.cnm.deepdive.powdr.controller;
 
+import edu.cnm.deepdive.powdr.model.entity.FavoriteSkiResort;
+import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.UserService;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,4 +27,6 @@ public class UserController {
   public User me(Authentication auth) {
     return (User) auth.getPrincipal();
   }
+
+
 }

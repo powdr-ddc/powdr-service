@@ -11,4 +11,7 @@ public interface SkiResortRepository  extends JpaRepository<SkiResort, UUID> {
   List<SkiResort> getByLatitudeAndLongitude(double latitude, double longitude);
 
   List<SkiResort> getByName(String name);
+
+  List<SkiResort> getAllByOrderByName();
+
 }
