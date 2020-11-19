@@ -30,24 +30,17 @@ public class PostService {
   }
 
   /**
-   * Gets or creates posts depending on whether or not they exist.
-   * @param id ID of a specific user.
-   * @param user Current user signed into the app.
-   * @param imagePath Pathway to the image location.
-   * @param content Content within a post.
-   * @return Returns a {@link Post} object.
+   * Saves a {@link Post} to a {@link User}.
+   * @param post Post to be saved.
+   * @param user User to save the post.
+   * @return A saved post.
    */
-  public Post getOrCreate(UUID id, User user, String imagePath, String content) {
-    return postRepository.findById(id)
-        .orElseGet(() -> {
-          Post post = new Post();
-          post.setUser(user);
-          post.setImagePath(imagePath);
-          post.setContent(content);
-          return postRepository.save(post);
-        });
+  public Post save(Post post, User user) {
+    if (post.getPostId() == null) {
+      post.setUser(user);
+    }
+    return postRepository.save(post);
   }
-
   /**
    * Retrieves a specific {@link Post} by the UUID.
    * @param id ID of a specific user.

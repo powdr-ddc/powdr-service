@@ -89,15 +89,15 @@ public class TripController {
 
   /**
    * Retrieves or Creates a {@link Trip} depending on whether or not it already exists.
-   * @param tripId UUID of Trip
+   * @param trip UUID of Trip
    * @param auth the current authenticated {@link User}.
    * @return returns a Trip.
    */
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
-  public Trip post(@RequestBody UUID tripId, Authentication auth) {
-    return tripService.getOrCreate(tripId, (User) auth.getPrincipal());
+  public Trip post(@RequestBody Trip trip, Authentication auth) {
+    return tripService.save(trip, (User) auth.getPrincipal());
   }
 
   /**

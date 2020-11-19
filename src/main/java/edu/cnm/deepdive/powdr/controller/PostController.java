@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.powdr.controller;
 
 import edu.cnm.deepdive.powdr.model.entity.Post;
+import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.PostService;
 import java.util.Date;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller class for {@link Post} that helps the service class talk to JSON.
+ * REST Controller class for {@link Post} to receive parameter values taken from HTTP requests to
+ * their respective specified URL endpoints, and returning serialized JSON object results to HTTP
+ * responses.
  */
 @RestController
 @RequestMapping("/posts")
@@ -71,18 +74,15 @@ public class PostController {
 
   /**
    * Gets or creates posts depending on whether or not they exist.
-   * @param postId ID of a specific user.
+   * @param post ID of a specific user.
    * @param auth Current authenticated user.
-   * @param imagePath Pathway to the image location.
-   * @param content Content within a post.
    * @return Returns a {@link Post} object.
    */
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-      consumes = MediaType.APPLICATION_JSON_VALUE, value = "/{postId}")
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
-  public Post post(@PathVariable UUID postId, Authentication auth, @RequestBody String imagePath,
-      @RequestBody String content) {
-    return postService.getOrCreate(postId, (User) auth.getPrincipal(), imagePath, content);
+  public Post post(@RequestBody Post post, Authentication auth) {
+    return postService.save(post, (User) auth.getPrincipal());
   }
 
   /**
