@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Repositories are basic update insert delete. Controller is the business logic for the repository.
+ * REST Controller class for {@link User} to receive parameter values taken from HTTP requests to
+ * their respective specified URL endpoints, and returning serialized JSON object results to HTTP
+ * responses.
  */
 @RestController
 @RequestMapping("/users")
@@ -26,20 +28,39 @@ public class UserController {
 
   private final UserService userService;
 
+  /**
+   * Constructs an instance of {@link UserService}
+   * @param userService An instance of {@link UserService}
+   */
   public UserController(UserService userService) {
     this.userService = userService;
   }
 
+  /**
+   * Gets the current user.
+   * @param auth Security authentication.
+   * @return The current user.
+   */
   @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
   public User me(Authentication auth) {
     return (User) auth.getPrincipal();
   }
 
+  /**
+   * Gets all users, ordered by their name.
+   * @return A list of {@link User}
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<User> getAllByOrderByName() {
     return userService.getAllByOrderByName();
   }
 
+  /**
+   * Gets a user according to their specified ID in the database.
+   * @param userId ID of the {@link User}
+   * @param auth Security Authentication
+   * @return A user if one exists.
+   */
   @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<User> getById(@PathVariable UUID userId, Authentication auth) {
     return userService.getById(userId);

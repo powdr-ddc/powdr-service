@@ -52,10 +52,19 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
   }
 
 
+  /**
+   * Gets all users ordered by their name.
+   * @return A list of {@link User}
+   */
   public List<User> getAllByOrderByName() {
     return userRepository.getAllByOrderByName();
   }
 
+  /**
+   * Get a {@link User} according to the ID in the database.
+   * @param id ID of the user.
+   * @return A user if one exists.
+   */
   public Optional<User> getById(UUID id) {
     return userRepository.findById(id);
   }
