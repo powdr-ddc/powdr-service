@@ -61,7 +61,7 @@ public class TripService {
    * @return
    */
   public List<Trip> getByDuration(Date start, Date end) {
-    return tripRepository.getByDuration(start, end);
+    return tripRepository.getAllByStartTimeAndEndTime(start, end);
   }
 
   /**

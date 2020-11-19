@@ -69,7 +69,7 @@ public class TripController {
    * @param auth The current authenticated {@link User}.
    * @return returns a specific Trip
    */
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/end-time", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<Trip> getByEndTime(@RequestBody Date end, Authentication auth) {
     return tripService.getByEndTime(end);
   }
@@ -81,7 +81,7 @@ public class TripController {
    * @param auth returns the current authenticated {@link User}.
    * @return returns a list of Trip
    */
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/duration", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Trip> getByDuration(@RequestBody Date start, @RequestBody Date end,
       Authentication auth) {
     return tripService.getByDuration(start, end);

@@ -38,14 +38,14 @@ public class SkiResortController {
     return skiResortService.getAll();
   }
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/location", produces = MediaType.APPLICATION_JSON_VALUE)
   public SkiResort getByLatitudeAndLongitude(@RequestBody double latitude,
       @RequestBody double longitude, Authentication auth) {
     return skiResortService.getByLatitudeAndLongitude(latitude, longitude);
   }
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<SkiResort> getByName(@RequestBody String name, Authentication auth) {
+  @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<SkiResort> getByName(@PathVariable String name, Authentication auth) {
     return skiResortService.getByName(name);
   }
 

@@ -54,8 +54,8 @@ public class PostController {
    * @param keyword A word specified by the user to match related post.
    * @return Returns a list of posts related to a keyword.
    */
-  @GetMapping
-  public List<Post> getPostByContentContains(String keyword) {
+  @GetMapping(value = "/{keyword}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Post> getPostByContentContains(@PathVariable String keyword) {
     return postService.getPostByContentContains(keyword);
   }
 
@@ -71,18 +71,18 @@ public class PostController {
 
   /**
    * Gets or creates posts depending on whether or not they exist.
-   * @param id ID of a specific user.
+   * @param postId ID of a specific user.
    * @param auth Current authenticated user.
    * @param imagePath Pathway to the image location.
    * @param content Content within a post.
    * @return Returns a {@link Post} object.
    */
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-      consumes = MediaType.APPLICATION_JSON_VALUE)
+      consumes = MediaType.APPLICATION_JSON_VALUE, value = "/{postId}")
   @ResponseStatus(HttpStatus.CREATED)
-  public Post post(@RequestBody UUID id, Authentication auth, @RequestBody String imagePath,
+  public Post post(@PathVariable UUID postId, Authentication auth, @RequestBody String imagePath,
       @RequestBody String content) {
-    return postService.getOrCreate(id, (User) auth.getPrincipal(), imagePath, content);
+    return postService.getOrCreate(postId, (User) auth.getPrincipal(), imagePath, content);
   }
 
   /**
