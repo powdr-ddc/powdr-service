@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.powdr.model.dao;
 
+import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +27,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
    * @return A list of users.
    */
   List<User> findByName(String name);
+  List<User> getAllByOrderByName();
 }

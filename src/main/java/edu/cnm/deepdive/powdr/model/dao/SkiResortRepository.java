@@ -27,4 +27,7 @@ public interface SkiResortRepository  extends JpaRepository<SkiResort, UUID> {
    * @return A list of ski resorts.
    */
   List<SkiResort> getByName(String name);
+
+  List<SkiResort> getAllByOrderByName();
+
 }

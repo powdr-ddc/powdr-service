@@ -16,23 +16,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PostRepository extends JpaRepository<Post, UUID> {
 
   /**
-   * Gets all {@link Post} for a specific {@link User}
-   * @param user Takes an instance of {@link User}
-   * @return A list of posts
+   * Retrieves a list of {@link Post} by a specified user.
+   * @param user Current user signed into the app.
+   * @return Returns a list of Posts.
    */
   List<Post> getAllByUser(User user);
 
   /**
-   * Gets a list of posts by a keyword specified by the {@link User}
-   * @param keyword The keyword used to search the content of a post
-   * @return A list of {@link Post}
+   * Retrieves a list of {@link Post} via a keyword specified by the user.
+   * @param keyword A word specified by the user to match related Posts.
+   * @return Returns a list of Posts.
    */
-  List<Post> findPostByContentNotContains(String keyword);
+  List<Post> getPostByContentContains(String keyword);
 
   /**
-   * Gets a list of posts according to a specific timestamp
-   * @param timestamp Timestamp to be used to search for {@link Post}
-   * @return A list of {@link Post}
+   * Retrieves a list of {@link Post} by the date at which they were posted.
+   * @param timestamp The date that a post was created.
+   * @return Returns a list of Posts.
    */
-  List<Post> findPostByTimestamp(Date timestamp);
+  List<Post> getPostByTimestamp(Date timestamp);
 }

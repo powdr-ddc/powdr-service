@@ -13,12 +13,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MessageRepository extends JpaRepository<Message, UUID> {
 
-
   /**
-   * Gets all messages between two specific users
-   * @param sender An instance of user for the person who sent the message
-   * @param receiver An instance of user for the person who receives the message
-   * @return A list of {@link Message}
+   * Gets all messages between the specified sender or receiver.
+   *
+   * @param sender {@link User} who sent the initial message.
+   * @param receiver {@link User} who receives the initial message.
+   * @return A list of messages between the two users.
    */
   List<Message> getAllBySenderOrReceiver(User sender, User receiver);
 }
