@@ -19,7 +19,8 @@ public interface SkiResortRepository  extends JpaRepository<SkiResort, UUID> {
    * @param longitude Longitude of {@link SkiResort} location.
    * @return A list of ski resorts.
    */
-  List<SkiResort> getByLatitudeAndLongitude(double latitude, double longitude);
+  // Might be optional
+  SkiResort getByLatitudeAndLongitude(double latitude, double longitude);
 
   /**
    * Retrieves a list of ski resorts according to their name.
