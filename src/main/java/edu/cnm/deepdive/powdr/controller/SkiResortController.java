@@ -55,7 +55,6 @@ public class SkiResortController {
         .orElseThrow(NoSuchElementException::new);
   }
 
-
   @PutMapping(value = "/{skiResortId}/favorite",
       produces = {
           MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE},

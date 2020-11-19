@@ -11,6 +11,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,8 +38,8 @@ public class UserController {
   }
 
   @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Optional<User> getById(UUID id, Authentication auth) {
-    return userService.getById(id);
+  public Optional<User> getById(@PathVariable UUID userId, Authentication auth) {
+    return userService.getById(userId);
   }
 
 }
