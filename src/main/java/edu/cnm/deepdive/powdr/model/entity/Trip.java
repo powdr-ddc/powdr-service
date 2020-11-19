@@ -60,29 +60,53 @@ public class Trip {
   @Column(nullable = false)
   private float distance;
 
+  /**
+   * Gets the UUID of a {@link Trip}
+   * @return Returns the UUID of Trip.
+   */
   public UUID getTripId() {
     return tripId;
   }
 
+  /**
+   * Gets the {@link User} that owns the trip.
+   * @return Returns the user.
+   */
   @NonNull
   public User getUser() {
     return user;
   }
 
+  /**
+   * Sets the {@link User} that owns the trip.
+   * @param user The current {@link User}
+   */
   public void setUser(@NonNull User user) {
     this.user = user;
   }
 
+  /**
+   * Gets start time of a {@link Trip}
+   * @return Returns the start time of the trip.
+   */
   @NonNull
   public Date getStartTime() {
     return startTime;
   }
 
+  /**
+   * Gets the end time of a {@link Trip}
+   * @return Returns the end time of the trip.
+   */
   @NonNull
   public Date getEndTime() {
     return endTime;
   }
 
+  /**
+   * Gets the distance travelled in a {@link Trip}
+   * @return Returns the distance of a trip.
+   */
   public float getDistance() {
     return distance;
   }
