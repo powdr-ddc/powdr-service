@@ -30,6 +30,13 @@ public interface SkiResortRepository  extends JpaRepository<SkiResort, UUID> {
   Optional<SkiResort> getByName(String name);
 
   /**
+   * Search for {@link SkiResort} using a keyword fragment, and orders the list by Name, Ascending
+   * @param fragment String fragment for search
+   * @return A list of Ski Resort
+   */
+  List<SkiResort> findAllByNameContainsOrderByNameAsc(String fragment);
+
+  /**
    * Retrieves a list of all ski resorts ordered by their name.
    * @return A list of ski resort.
    */

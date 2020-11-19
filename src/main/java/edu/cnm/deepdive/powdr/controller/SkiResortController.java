@@ -5,7 +5,6 @@ import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.SkiResortService;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ExposesResourceFor(SkiResort.class)
 public class SkiResortController {
 
+  private static final String PARAM_STRING = "[0-9a-fA-F\\-]{32,36}";
   private final SkiResortService skiResortService;
 
   /**
@@ -67,27 +68,38 @@ public class SkiResortController {
   }
 
   /**
-   * Gets a list of {@link SkiResort} according to it's name.
-   * @param name Name of ski resort.
-   * @param auth Security authentication.
-   * @return A ski resort if available.
-   */
-  @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Optional<SkiResort> getByName(@PathVariable String name, Authentication auth) {
-    return skiResortService.getByName(name);
-  }
-
-  /**
    * Gets a ski resort according to it's ID.
    * @param skiResortId ID of ski resort.
    * @param auth Security authentication.
    * @return A ski resort.
    */
-  @GetMapping(value = "/{skiResortId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{skiResortId:" + PARAM_STRING + "}", produces = MediaType.APPLICATION_JSON_VALUE)
   public SkiResort get(@PathVariable UUID skiResortId, Authentication auth) {
     return skiResortService.get(skiResortId)
         .orElseThrow(NoSuchElementException::new);
   }
+
+  /**
+   * Searches through a List of {@link SkiResort} by name.
+   * @param fragment String fragment for search
+   * @param auth the current authenticated {@link User}
+   * @return A list of {@link SkiResort}
+   */
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = "fragment")
+  public List<SkiResort> searchByName(@RequestParam String fragment, Authentication auth) {
+    return skiResortService.searchByName(fragment);
+  }
+
+//  /**
+//   * Gets a list of {@link SkiResort} according to it's name.
+//   * @param name Name of ski resort.
+//   * @param auth Security authentication.
+//   * @return A ski resort if available.
+//   */
+//  @GetMapping(value = "/{name:.*[^0-9a-fA-F\\-].*}", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Optional<SkiResort> getByName(@PathVariable String name, Authentication auth) {
+//    return skiResortService.getByName(name);
+//  }
 
   /**
    * Sets a ski resort to a user's favorites; otherwise, throws a {@link NoSuchElementException} if
@@ -97,7 +109,7 @@ public class SkiResortController {
    * @param auth Security authentication
    * @return True if the ski resort is part of the user's favorites.
    */
-  @PutMapping(value = "/{skiResortId}/favorite",
+  @PutMapping(value = "/{skiResortId:" + PARAM_STRING + "}/favorite",
       produces = {
           MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE},
       consumes = {

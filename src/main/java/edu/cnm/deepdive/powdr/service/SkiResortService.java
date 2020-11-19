@@ -83,6 +83,15 @@ public class SkiResortService {
   }
 
   /**
+   * Searches through a List of {@link SkiResort} by name.
+   * @param fragment String fragment for search
+   * @return A list of {@link SkiResort}
+   */
+  public List<SkiResort> searchByName(String fragment) {
+    return skiResortRepository.findAllByNameContainsOrderByNameAsc(fragment);
+  }
+
+  /**
    * Deletes a ski resort from the database.
    * @param skiResort {@link SkiResort} to be deleted.
    */
