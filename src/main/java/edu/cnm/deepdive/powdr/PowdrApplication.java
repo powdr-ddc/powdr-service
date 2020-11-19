@@ -16,6 +16,10 @@ import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType
 @SpringBootApplication
 public class PowdrApplication {
 
+  /**
+   * Main class though which Powdr Service runs
+   * @param args
+   */
   public static void main(String[] args) {
     SpringApplication.run(PowdrApplication.class, args);
   }
