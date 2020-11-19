@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @ExposesResourceFor(Trip.class)
 public class TripController {
 
-
+  public Trip trip
 
 }
