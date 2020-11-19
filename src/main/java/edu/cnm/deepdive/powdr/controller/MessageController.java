@@ -39,7 +39,7 @@ public class MessageController {
    * Constructs an instance of {@link MessageService}.
    *
    * @param messageService Takes an instance of {@link MessageService}.
-   * @param userService
+   * @param userService Takes an instance of {@link UserService}.
    */
   @Autowired
   public MessageController(MessageService messageService,
