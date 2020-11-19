@@ -43,25 +43,44 @@ public class FavoriteSkiResort {
   @JoinColumn(name = "ski_resort_id", nullable = false, updatable = false)
   private SkiResort skiResort;
 
-
+  /**
+   * Retrieves the UUID of a {@link FavoriteSkiResort}.
+   * @return UUID of a FavoriteSkiResort.
+   */
   public UUID getId() {
     return id;
   }
 
+  /**
+   * Retrieves the {@link User} who has the ski resort as a favorite.
+   * @return The current {@link User}
+   */
   @NonNull
   public User getUser() {
     return user;
   }
 
+  /**
+   * Sets the current {@link User} as the owner of the FavoriteSkiResort
+   * @param user The current instance of User.
+   */
   public void setUser(@NonNull User user) {
     this.user = user;
   }
 
+  /**
+   * Retrieves the {@link SkiResort} that will be marked as a favorite.
+   * @return The selected SkiResort
+   */
   @NonNull
   public SkiResort getSkiResort() {
     return skiResort;
   }
 
+  /**
+   * Sets the selected {@link SkiResort} as a favorite of the current User.
+   * @param skiResort The selected SkiResort.
+   */
   public void setSkiResort(@NonNull SkiResort skiResort) {
     this.skiResort = skiResort;
   }

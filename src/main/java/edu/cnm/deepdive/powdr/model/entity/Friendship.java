@@ -40,32 +40,59 @@ public class Friendship {
 
   private boolean confirmed;
 
+  /**
+   * Retrieves the UUID of a specific {@link Friendship}
+   * @return UUID of Friendship.
+   */
   public UUID getFriendshipId() {
     return friendshipId;
   }
 
+  /** Retrieves the {@link User} that sent the friend request.
+   * @return The User that sent the request.
+   */
   @NonNull
   public User getRequester() {
     return requester;
   }
 
+  /**
+   * Sets the current {@link User} as the sender of the friend request
+   * @param requester The current User sending the request.
+   */
   public void setRequester(@NonNull User requester) {
     this.requester = requester;
   }
 
+  /** Retrieves the {@link User} that received the friend request.
+   * @return The User that received the request.
+   */
   @NonNull
   public User getConfirmer() {
     return confirmer;
   }
 
+  /**
+   * Sets the current {@link User} as the receiver of the friend request
+   * @param confirmer The current User receiving the request.
+   */
   public void setConfirmer(@NonNull User confirmer) {
     this.confirmer = confirmer;
   }
 
+  /**
+   * Determines whether or not the friend request has been accepted by the {@link User} who is
+   * receiving the request.
+   * @return A boolean value of Confirmed = true.
+   */
   public boolean isConfirmed() {
     return confirmed;
   }
 
+  /**
+   * Either confirms or denies the friend request.
+   * @param confirmed Yes or No to confirm request
+   */
   public void setConfirmed(boolean confirmed) {
     this.confirmed = confirmed;
   }
