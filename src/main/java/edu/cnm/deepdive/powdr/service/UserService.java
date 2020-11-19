@@ -2,10 +2,13 @@ package edu.cnm.deepdive.powdr.service;
 
 import edu.cnm.deepdive.powdr.controller.UserController;
 import edu.cnm.deepdive.powdr.model.dao.UserRepository;
+import edu.cnm.deepdive.powdr.model.entity.FavoriteSkiResort;
+import edu.cnm.deepdive.powdr.model.entity.Friendship;
 import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,6 +71,41 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
   public Optional<User> getById(UUID id) {
     return userRepository.findById(id);
   }
+
+  /**
+   * Checks a {@link User} to see if that User is already in another {@link User}'s friends list.
+   * If they are, they are removed from the friends list, if they are not, add that User to the list.
+   * @param requester {@link User} who requests the friendship
+   * @param friend boolean that returns True if User is already a friend.
+   * @param confirmer {@link User} who receives the request for friendship.
+   */
+  public void setFriend(User requester, boolean friend, User confirmer) {
+    boolean accepted = false;
+    List<Friendship> friendships = confirmer.getFriendConfirmer();
+    for (
+        Iterator<Friendship> iter = friendships.iterator();
+        iter.hasNext();
+      // Updater in body.
+    ) {
+      Friendship friendship = iter.next();
+      if (friendship.isConfirmed()) {
+        accepted = true;
+        if (!friend) { // Need to remove it from list of favorites.
+//          friendship.setConfirmer(null);
+          iter.remove();
+        }
+        break;
+      }
+    }
+    if (friend && !accepted) { // Need to add to list of favorites if not found.
+      Friendship friendship = new Friendship();
+      friendship.setConfirmer(confirmer);
+      friendship.setRequester(requester);
+      friendships.add(friendship);
+    }
+    userRepository.save(confirmer);
+  }
+
 
   /**
    * Converts a json web token from Google to a {@link UsernamePasswordAuthenticationToken}
