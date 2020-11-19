@@ -47,7 +47,7 @@ public class MessageController {
    * if none are found.
    *
    * @param messageId ID of the message in the database
-   * @param auth
+   * @param auth Security Authentication
    * @return A message, or else throw a {@link NoSuchElementException}.
    */
   @GetMapping(value = "/{messageId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +61,7 @@ public class MessageController {
    *
    * @param sender User who sent the message.
    * @param receiver User who receives the message.
-   * @param auth
+   * @param auth Security Authentication
    * @return A list of messages of the specified sender/receiver.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -87,7 +87,7 @@ public class MessageController {
    * Deletes a {@link Message} according to the specified ID in the database if one is present.
    *
    * @param messageId ID of the {@link Message}
-   * @param auth
+   * @param auth Security Authentication
    */
   @DeleteMapping(value = "/{messageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)

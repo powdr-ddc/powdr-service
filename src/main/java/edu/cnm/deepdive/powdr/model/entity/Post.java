@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -64,8 +63,8 @@ public class Post {
   }
 
   /**
-   *
-   * @return
+   * Retrieves the current {@link User} owner of the {@link Post}.
+   * @return returns a User
    */
   @NonNull
   public User getUser() {
@@ -73,8 +72,8 @@ public class Post {
   }
 
   /**
-   *
-   * @param user
+   * Sets the current {@link User} as the owner of the {@link Post}.
+   * @param user The current User
    */
   public void setUser(@NonNull User user) {
     this.user = user;

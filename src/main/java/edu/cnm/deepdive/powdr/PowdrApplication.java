@@ -18,7 +18,7 @@ public class PowdrApplication {
 
   /**
    * Main class though which Powdr Service runs
-   * @param args
+   * @param args System Arguments
    */
   public static void main(String[] args) {
     SpringApplication.run(PowdrApplication.class, args);

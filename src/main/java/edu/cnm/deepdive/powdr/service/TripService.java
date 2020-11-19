@@ -22,7 +22,7 @@ public class TripService {
 
   /**
    * A Constructor that creates an instance of the {@link TripRepository}.
-   * @param tripRepository
+   * @param tripRepository Repository class for {@link Trip}.
    */
   @Autowired
   public TripService(TripRepository tripRepository) {
@@ -55,10 +55,10 @@ public class TripService {
   }
 
   /**
-   *
-   * @param start
-   * @param end
-   * @return
+   * Retrieves a List of {@link Trip} filtered by Duration.
+   * @param start Start Timestamp
+   * @param end End Timestamp
+   * @return A List of Trip
    */
   public List<Trip> getByDuration(Date start, Date end) {
     return tripRepository.getAllByStartTimeAndEndTime(start, end);
