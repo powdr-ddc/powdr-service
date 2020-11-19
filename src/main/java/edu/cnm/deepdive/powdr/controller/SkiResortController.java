@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.powdr.controller;
 
-import edu.cnm.deepdive.powdr.model.entity.Message;
 import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.SkiResortService;

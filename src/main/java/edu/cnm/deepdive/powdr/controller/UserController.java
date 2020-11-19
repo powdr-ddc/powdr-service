@@ -1,10 +1,9 @@
 package edu.cnm.deepdive.powdr.controller;
 
-import edu.cnm.deepdive.powdr.model.entity.FavoriteSkiResort;
-import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.UserService;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -12,7 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,6 +64,32 @@ public class UserController {
   @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<User> getById(@PathVariable UUID userId, Authentication auth) {
     return userService.getById(userId);
+  }
+
+  /**
+   * Sets a {@link User} to a User's friends; otherwise, throws a {@link NoSuchElementException} if
+   * not found.
+   * @param friendshipId ID of User
+   * @param friend True if the User is part of the other User's friends.
+   * @param auth Security authentication
+   * @return True if the User is part of the other User's friends.
+   */
+  @PutMapping(value = "/{friendshipId}/friends",
+      produces = {
+          MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE},
+      consumes = {
+          MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+  public boolean setFriend(@PathVariable UUID friendshipId, @RequestBody boolean friend,
+      Authentication auth) {
+    userService.getById(friendshipId)
+        .ifPresentOrElse(
+            (user) -> userService
+                .setFriend(user, friend, (User) auth.getPrincipal()),
+            () -> {
+              throw new NoSuchElementException();
+            }
+        );
+    return friend;
   }
 
 }

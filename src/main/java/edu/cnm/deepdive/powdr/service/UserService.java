@@ -2,9 +2,7 @@ package edu.cnm.deepdive.powdr.service;
 
 import edu.cnm.deepdive.powdr.controller.UserController;
 import edu.cnm.deepdive.powdr.model.dao.UserRepository;
-import edu.cnm.deepdive.powdr.model.entity.FavoriteSkiResort;
 import edu.cnm.deepdive.powdr.model.entity.Friendship;
-import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import java.util.Collection;
 import java.util.Collections;

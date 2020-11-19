@@ -1,10 +1,8 @@
 package edu.cnm.deepdive.powdr.service;
 
 import edu.cnm.deepdive.powdr.model.dao.SkiResortRepository;
-import edu.cnm.deepdive.powdr.model.dao.TripRepository;
 import edu.cnm.deepdive.powdr.model.entity.FavoriteSkiResort;
 import edu.cnm.deepdive.powdr.model.entity.SkiResort;
-import edu.cnm.deepdive.powdr.model.entity.Trip;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import java.util.Iterator;
 import java.util.List;
