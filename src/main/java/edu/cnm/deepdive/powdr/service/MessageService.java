@@ -31,19 +31,11 @@ public class MessageService {
    * Get's a message between two users, if a message does not exist, then create a message between
    * the two users.
    *
-   * @param receiver {@link User} who received the message.
-   * @param sender User who sent the message.
-   * @param id ID of the message in the database
+   * @param message Instance of Message
    * @return The message between the two users, or save the message if one does not exist.
    */
-  public Message getOrCreate(User receiver, User sender, UUID id) {
-    return messageRepository.findById(id)
-        .orElseGet(() -> {
-          Message message = new Message();
-          message.setReceiver(receiver);
-          message.setSender(sender);
-          return messageRepository.save(message);
-        });
+  public Message save(Message message) {
+    return messageRepository.save(message);
   }
 
   /**

@@ -3,8 +3,10 @@ package edu.cnm.deepdive.powdr.controller;
 import edu.cnm.deepdive.powdr.model.entity.Message;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.MessageService;
+import edu.cnm.deepdive.powdr.service.UserService;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -31,15 +33,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
 
   private final MessageService messageService;
+  private final UserService userService;
 
   /**
    * Constructs an instance of {@link MessageService}.
    *
    * @param messageService Takes an instance of {@link MessageService}.
+   * @param userService
    */
   @Autowired
-  public MessageController(MessageService messageService) {
+  public MessageController(MessageService messageService,
+      UserService userService) {
     this.messageService = messageService;
+    this.userService = userService;
   }
 
   /**
@@ -72,15 +78,22 @@ public class MessageController {
   /**
    * Posts a message to the server.
    *
-   * @param receiver User who first received the message.
-   * @param sender User who first sent the message.
-   * @param messageId Message ID between the two Users.
+   * @param auth User who first sent the message.
+   * @param message Message between the two Users.
    * @return The message between the two users.
    */
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
-  public Message post(@RequestBody User receiver, @RequestBody User sender, UUID messageId) {
-    return messageService.getOrCreate(receiver, sender, messageId);
+  public Message post(@RequestBody Message message, Authentication auth) {
+    return Optional.of(message.getReceiver())
+        .map(User::getUserId)
+        .flatMap(userService::getById)
+        .map((receiver) -> {
+          message.setReceiver(receiver);
+          message.setSender((User) auth.getPrincipal());
+          return messageService.save(message);
+        })
+        .orElseThrow(NoSuchElementException::new);
   }
 
   /**

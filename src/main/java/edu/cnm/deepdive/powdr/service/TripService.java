@@ -30,21 +30,17 @@ public class TripService {
   }
 
   /**
-   * A method for retrieving a specific {@link Trip} by it's UUID, or if it doesn't exist, creates
-   * a Trip and sets the current {@link User} as the owner.
-   * @param id UUID of Trip
-   * @param user The user to be designated as the owner.
-   * @return A specific Trip.
+   * Saves a {@link Trip} to a {@link User}.
+   * @param trip Trip to be saved.
+   * @param user User to save the trip to.
+   * @return A saved trip.
    */
-  public Trip getOrCreate(UUID id, User user) {
-    return tripRepository.findById(id)
-        .orElseGet(() -> {
-          Trip trip = new Trip();
-          trip.setUser(user);
-          return tripRepository.save(trip);
-        });
+  public Trip save(Trip trip, User user) {
+    if (trip.getTripId() == null) {
+      trip.setUser(user);
+    }
+    return tripRepository.save(trip);
   }
-
   /**
    * Retrieves a specific {@link Trip} and filters the response by it's End timestamp.
    * @param end End Timestamp

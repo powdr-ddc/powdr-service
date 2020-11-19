@@ -46,7 +46,7 @@ public class Trip {
   private User user;
 
   @NonNull
-  @CreationTimestamp
+  @CreationTimestamp // no creation timestamp; need setter
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private Date startTime;
