@@ -1,0 +1,49 @@
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 15MB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          client-id: 968256038091-1v6di9e1vmot10l3cocksflf8rpbv3t9.apps.googleusercontent.com
+  datasource:
+    url: jdbc:derby:gallery_db;create=true;collation=TERRITORY_BASED:PRIMARY
+  jpa:
+    database-platform: org.hibernate.dialect.DerbyTenSevenDialect
+    hibernate:
+      ddl-auto: update
+#    properties:
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-source: metadata
+#            scripts:
+#              action: create
+#              create-target: ddl.sql
+
+server:
+  port: 8080
+  servlet:
+    context-path: /powdr
+
+upload:
+  applicationHome: true
+  directory: uploads
+  subdirectoryPattern: "^(.{4})(.{2})(.{2}).*$"
+  whitelist:
+    - image/bmp
+    - image/gif
+    - image/jpeg+
+    - image/pjpeg
+    - image/png
+    - image/tiff
+  filename:
+    format: "%1$s-%2$d.%3$s"
+    randomizerLimit: 1000000
+    timestamp:
+      format: yyyyMMddHHmmssSSS
+      timeZone: UTC

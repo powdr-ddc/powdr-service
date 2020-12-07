@@ -98,6 +98,9 @@ public class PostController {
     return postService.save(post, (User) auth.getPrincipal());
   }
 
+  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+
   /**
    * Deletes posts specified by the user.
    * @param postId ID of a specific post.
