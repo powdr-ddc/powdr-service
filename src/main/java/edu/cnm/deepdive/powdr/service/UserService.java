@@ -61,6 +61,10 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
     return userRepository.getAllByOrderByName();
   }
 
+  public List<User> getAllFriends(User confirmer, User requester) {
+    return userRepository.getByFriendConfirmerAndFriendRequester(confirmer, requester);
+  }
+
   /**
    * Get a {@link User} according to the ID in the database.
    * @param id ID of the user.
@@ -89,7 +93,7 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
       if (friendship.isConfirmed()) {
         accepted = true;
         if (!friend) { // Need to remove it from list of favorites.
-//          friendship.setConfirmer(null);
+          friendship.setConfirmer(null);
           iter.remove();
         }
         break;

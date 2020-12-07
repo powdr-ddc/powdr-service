@@ -4,7 +4,6 @@ import edu.cnm.deepdive.powdr.model.entity.Post;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -35,4 +34,6 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
    * @return Returns a list of Posts.
    */
   List<Post> getPostByTimestamp(Date timestamp);
+
+  List<Post> findAllByTimestampBetweenOrderByTimestampAsc(Date start, Date end);
 }

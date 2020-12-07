@@ -77,6 +77,17 @@ public class PostService {
     return postRepository.getPostByTimestamp(timestamp);
   }
 
+  public List<Post> getByDateRange(Date start, Date end) {
+    return postRepository.findAllByTimestampBetweenOrderByTimestampAsc(start, end);
+  }
+
+  public List<Post> getByMostRecent(int days) {
+    Date now = new Date();
+    Date cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+    return postRepository.findAllByTimestampBetweenOrderByTimestampAsc(cutoff, now);
+  }
+
+
   /**
    * Deletes a specific {@link Post} specified by the user.
    * @param post The selected Post.

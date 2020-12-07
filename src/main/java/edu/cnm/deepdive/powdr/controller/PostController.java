@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.powdr.controller;
 
 import edu.cnm.deepdive.powdr.model.entity.Post;
-import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.PostService;
 import java.util.Date;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,34 +43,47 @@ public class PostController {
   }
 
   /**
-   * Gets and displays all posts by a specified user.
-   * @param auth The current authenticated user.
-   * @return Returns a users list of posts.
-   */
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Post> getAll(Authentication auth) {
-    return postService.getAllByUser((User) auth.getPrincipal());
-  }
-
-  /**
    * Gets and displays posts gathered by a keyword.
    * @param keyword A word specified by the user to match related post.
    * @return Returns a list of posts related to a keyword.
    */
   @GetMapping(value = "/{keyword}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Post> getPostByContentContains(@PathVariable String keyword) {
+  public List<Post> getPostByContentContains(Authentication auth, @PathVariable String keyword) {
     return postService.getPostByContentContains(keyword);
   }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"days"})
+  public List<Post> getByDateRange(Authentication auth, @RequestParam int days) {
+    return postService.getByMostRecent(days);
+  }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"start", "end"})
+  public List<Post> getByDateRange(Authentication auth,
+      @RequestParam Date start, @RequestParam Date end) {
+    return postService.getByDateRange(start, end);
+  }
+
+  /**
+   * Gets and displays all posts by a specified user.
+   * @param auth The current authenticated user.
+   * @return Returns a users list of posts.
+   */
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"!start", "!end"})
+  public List<Post> getAll(Authentication auth) {
+    return postService.getAllByUser((User) auth.getPrincipal());
+  }
+
 
   /**
    * Gets and displays posts by date posted.
    * @param timestamp The point in time that a post was created.
    * @return Returns a list of posts created on a certain date.
    */
-  @GetMapping
-  public List<Post> getPostByTimestamp(Date timestamp) {
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Post> getPostByTimestamp(@RequestParam Date timestamp) {
     return postService.getPostByTimestamp(timestamp);
   }
+
 
   /**
    * Gets or creates posts depending on whether or not they exist.

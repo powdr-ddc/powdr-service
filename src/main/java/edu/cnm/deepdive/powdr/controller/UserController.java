@@ -55,6 +55,11 @@ public class UserController {
     return userService.getAllByOrderByName();
   }
 
+//  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//  public List<User> getAllFriends(Authentication auth, User confirmer, User requester) {
+//    return userService.getAllFriends()
+//  }
+
   /**
    * Gets a user according to their specified ID in the database.
    * @param userId ID of the {@link User}
