@@ -11,7 +11,7 @@ spring:
           issuer-uri: https://accounts.google.com
           client-id: 968256038091-1v6di9e1vmot10l3cocksflf8rpbv3t9.apps.googleusercontent.com
   datasource:
-    url: jdbc:derby:gallery_db;create=true;collation=TERRITORY_BASED:PRIMARY
+    url: jdbc:derby:powdr_db;create=true;collation=TERRITORY_BASED:PRIMARY
   jpa:
     database-platform: org.hibernate.dialect.DerbyTenSevenDialect
     hibernate:
@@ -28,7 +28,7 @@ spring:
 server:
   port: 8080
   servlet:
-    context-path: /powdr
+    context-path: /powdr/api
 
 upload:
   applicationHome: true
@@ -37,7 +37,7 @@ upload:
   whitelist:
     - image/bmp
     - image/gif
-    - image/jpeg+
+    - image/jpeg
     - image/pjpeg
     - image/png
     - image/tiff

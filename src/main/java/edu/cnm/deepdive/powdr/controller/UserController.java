@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +38,7 @@ public class UserController {
   private static final String DESCRIPTION_PROPERTY_PATTERN =
       BaseParameterPatterns.UUID_PATH_PARAMETER_PATTERN + "/description";
   private static final String CONTENT_PROPERTY_PATTERN =
-      BaseParameterPatterns.UUID_PATH_PARAMETER_PATTERN + "/content";
+      BaseParameterPatterns.UUID_PATH_PARAMETER_PATTERN + "/image";
   private static final String CONTRIBUTOR_PARAM_NAME = "contributor";
   private static final String FRAGMENT_PARAM_NAME = "q";
   private static final String ATTACHMENT_DISPOSITION_FORMAT = "attachment; filename=\"%s\"";
@@ -132,12 +131,11 @@ public class UserController {
    * @param auth Authentication token with {@link User} principal.
    * @return The image path connecting a user to an image.
    */
-  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public String post(
+  @PutMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public User post(
       @RequestParam MultipartFile file, Authentication auth) {
     try {
-      User userImage = userService.store(file, (User) auth.getPrincipal());
-      return userImage.getImagePath();
+      return userService.store(file, (User) auth.getPrincipal());
     } catch (IOException e) {
       throw new StorageException(e);
     } catch (HttpMediaTypeNotAcceptableException e) {
@@ -149,10 +147,11 @@ public class UserController {
   public ResponseEntity<Resource> getImage(
       @SuppressWarnings("MVCPathVariableInspection") @PathVariable UUID id, Authentication auth) {
     return userService.getById(id)
-        .map((image) -> {
+        .map((user) -> {
           try {
-            Resource file = userService.retrieve(image);
+            Resource file = userService.retrieve(user);
             return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, user.getContentType())
                 .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.contentLength()))
                 .body(file);
           } catch (IOException e) {
@@ -162,7 +161,13 @@ public class UserController {
         .orElseThrow(ImageNotFoundException::new);
   }
 
-  private String dispositionHeader(String filename) {
+  @GetMapping(value = "/me/image")
+  public ResponseEntity<Resource> getImage(Authentication auth) {
+    User user = (User) auth.getPrincipal();
+    return getImage(user.getUserId(), auth);
+  }
+
+    private String dispositionHeader(String filename) {
     return String.format(ATTACHMENT_DISPOSITION_FORMAT, filename);
   }
 

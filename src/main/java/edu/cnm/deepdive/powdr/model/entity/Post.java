@@ -49,6 +49,8 @@ public class Post {
 
   private String imagePath;
 
+  private String contentType;
+
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
@@ -119,5 +121,13 @@ public class Post {
    */
   public void setImagePath(String imagePath) {
     this.imagePath = imagePath;
+  }
+
+  public String getContentType() {
+    return contentType;
+  }
+
+  public void setContentType(String contentType) {
+    this.contentType = contentType;
   }
 }

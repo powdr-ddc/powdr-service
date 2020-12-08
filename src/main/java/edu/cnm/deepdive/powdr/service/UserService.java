@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -146,9 +147,11 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
   public User store(
       @NonNull MultipartFile file, @NonNull User user)
       throws IOException, HttpMediaTypeNotAcceptableException {
+    String contentType = file.getContentType();
     String reference = storageService.store(file);
     user.setImagePath(reference);
-    return user;
+    user.setContentType((contentType != null) ? contentType : MediaType.APPLICATION_OCTET_STREAM_VALUE);
+    return userRepository.save(user);
   }
 
 

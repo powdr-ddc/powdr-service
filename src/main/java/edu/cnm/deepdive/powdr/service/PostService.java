@@ -3,12 +3,17 @@ package edu.cnm.deepdive.powdr.service;
 import edu.cnm.deepdive.powdr.model.dao.PostRepository;
 import edu.cnm.deepdive.powdr.model.entity.Post;
 import edu.cnm.deepdive.powdr.model.entity.User;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * A Service class for the {@link Post} entity that participates in dependency injection,
@@ -19,14 +24,16 @@ import org.springframework.stereotype.Service;
 public class PostService {
 
   private final PostRepository postRepository;
+  private final StorageService storageService;
 
   /**
    * Creates an instance of {@link PostRepository}
    * @param postRepository Reference to {@link PostRepository}
    */
   @Autowired
-  public PostService(PostRepository postRepository) {
+  public PostService(PostRepository postRepository, StorageService storageService) {
     this.postRepository = postRepository;
+    this.storageService = storageService;
   }
 
   /**
@@ -67,6 +74,17 @@ public class PostService {
   public List<Post> getPostByContentContains(String keyword) {
     return postRepository.getPostByContentContains(keyword);
   }
+
+  public Post store(
+      @NonNull MultipartFile file, @NonNull Post post)
+      throws IOException, HttpMediaTypeNotAcceptableException {
+    String contentType = file.getContentType();
+    String reference = storageService.store(file);
+    post.setImagePath(reference);
+    post.setContentType((contentType != null) ? contentType : MediaType.APPLICATION_OCTET_STREAM_VALUE);
+    return postRepository.save(post);
+  }
+
 
   /**
    * Retrieves all {@link Post} by the date they were posted.

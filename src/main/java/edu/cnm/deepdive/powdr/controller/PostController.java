@@ -98,7 +98,25 @@ public class PostController {
     return postService.save(post, (User) auth.getPrincipal());
   }
 
-  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  @PutMapping(value = "/{postId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+//      produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Post post(@PathVariable UUID postId, @RequestParam MultipartFile file, Authentication auth) {
+//    try {
+//      return postService.get(postId)
+//          .map((post) -> {
+//            if (post.getUser().getUserId().equals(((User) auth.getPrincipal()).getUserId())) {
+//              return post;
+//            } else {
+//              return null;
+//            }
+//          })
+//          .map((post) -> postService.store(file, post));
+//    } catch (IOException e) {
+//      throw new StorageException(e);
+//    } catch (HttpMediaTypeNotAcceptableException e) {
+//      throw new MimeTypeNotAllowedException();
+//    }
+//  }
 
 
   /**

@@ -40,6 +40,8 @@ public class User {
 
   private String imagePath;
 
+  private String contentType;
+
   @NonNull
   @Column(nullable = false)
   private String name;
@@ -159,6 +161,14 @@ public class User {
    */
   public void setImagePath(String imagePath) {
     this.imagePath = imagePath;
+  }
+
+  public String getContentType() {
+    return contentType;
+  }
+
+  public void setContentType(String contentType) {
+    this.contentType = contentType;
   }
 
   /**
