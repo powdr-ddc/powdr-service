@@ -15,6 +15,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class to preload data into the database.
+ */
 @Component
 @Profile("preload")
 public class Preloader implements CommandLineRunner {
@@ -23,6 +26,10 @@ public class Preloader implements CommandLineRunner {
 
   private final SkiResortRepository repository;
 
+  /**
+   * Constructs an instance of Preloader.
+   * @param repository A {@link SkiResortRepository} instance
+   */
   public Preloader(SkiResortRepository repository) {
     this.repository = repository;
   }

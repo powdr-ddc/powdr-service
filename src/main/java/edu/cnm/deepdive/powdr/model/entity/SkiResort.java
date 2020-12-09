@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
@@ -67,6 +66,10 @@ public class SkiResort {
     return name;
   }
 
+  /**
+   * Sets the name of a {@link SkiResort}.
+   * @param name Name of ski resort.
+   */
   public void setName(@NonNull String name) {
     this.name = name;
   }

@@ -75,6 +75,14 @@ public class PostService {
     return postRepository.getPostByContentContains(keyword);
   }
 
+  /**
+   * Stores an image for a post in the database.
+   * @param file Multipart file of the image
+   * @param post An instance of {@link Post}
+   * @return A saved image post.
+   * @throws IOException
+   * @throws HttpMediaTypeNotAcceptableException
+   */
   public Post store(
       @NonNull MultipartFile file, @NonNull Post post)
       throws IOException, HttpMediaTypeNotAcceptableException {
@@ -95,10 +103,21 @@ public class PostService {
     return postRepository.getPostByTimestamp(timestamp);
   }
 
+  /**
+   * Retrieves all {@link Post} in the specified date range.
+   * @param start Start date of search query.
+   * @param end End date of search query.
+   * @return A list of post according to a date range.
+   */
   public List<Post> getByDateRange(Date start, Date end) {
     return postRepository.findAllByTimestampBetweenOrderByTimestampAsc(start, end);
   }
 
+  /**
+   * Retrieves a list of {@link Post} made since a the specified date.
+   * @param days Number of days to retrieve posts.
+   * @return A list of posts.
+   */
   public List<Post> getByMostRecent(int days) {
     Date now = new Date();
     Date cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);

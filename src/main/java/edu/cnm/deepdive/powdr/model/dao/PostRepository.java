@@ -35,5 +35,11 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
    */
   List<Post> getPostByTimestamp(Date timestamp);
 
+  /**
+   * Retrieves a list of {@link Post} between a specified start and end date.
+   * @param start Start date to retrieve the list of post.
+   * @param end End date to retrieve the list of post.
+   * @return
+   */
   List<Post> findAllByTimestampBetweenOrderByTimestampAsc(Date start, Date end);
 }

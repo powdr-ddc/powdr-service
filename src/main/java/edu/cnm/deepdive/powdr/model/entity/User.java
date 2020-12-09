@@ -163,10 +163,17 @@ public class User {
     this.imagePath = imagePath;
   }
 
+  /**
+   * Returns the content type of an image.
+   */
   public String getContentType() {
     return contentType;
   }
 
+  /**
+   * Sets the content type an image.
+   * @param contentType Content type for image.
+   */
   public void setContentType(String contentType) {
     this.contentType = contentType;
   }

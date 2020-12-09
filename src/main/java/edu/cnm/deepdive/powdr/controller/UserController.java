@@ -143,6 +143,12 @@ public class UserController {
     }
   }
 
+  /**
+   * Gets an image from a {@link User}
+   * @param id id of User.
+   * @param auth Security authentication.
+   * @return A response if the image was retrieved.
+   */
   @GetMapping(value = CONTENT_PROPERTY_PATTERN)
   public ResponseEntity<Resource> getImage(
       @SuppressWarnings("MVCPathVariableInspection") @PathVariable UUID id, Authentication auth) {
@@ -161,6 +167,11 @@ public class UserController {
         .orElseThrow(ImageNotFoundException::new);
   }
 
+  /**
+   * Gets a single image from a {@link User}
+   * @param auth Security authentication.
+   * @return An image from a user.
+   */
   @GetMapping(value = "/me/image")
   public ResponseEntity<Resource> getImage(Authentication auth) {
     User user = (User) auth.getPrincipal();
