@@ -24,11 +24,12 @@ create table message
 );
 create table post
 (
-    post_id    CHAR(16) FOR BIT DATA not null,
-    content    varchar(255)          not null,
-    image_path varchar(255),
-    timestamp  timestamp,
-    user_id    CHAR(16) FOR BIT DATA not null,
+    post_id      CHAR(16) FOR BIT DATA not null,
+    content      varchar(255)          not null,
+    content_type varchar(255),
+    image_path   varchar(255),
+    timestamp    timestamp,
+    user_id      CHAR(16) FOR BIT DATA not null,
     primary key (post_id)
 );
 create table ski_resort
@@ -50,11 +51,12 @@ create table trip
 );
 create table user_profile
 (
-    user_id    CHAR(16) FOR BIT DATA not null,
-    bio        varchar(255),
-    image_path varchar(255),
-    name       varchar(255)          not null,
-    oauth_key  varchar(255)          not null,
+    user_id      CHAR(16) FOR BIT DATA not null,
+    bio          varchar(255),
+    content_type varchar(255),
+    image_path   varchar(255),
+    name         varchar(255)          not null,
+    oauth_key    varchar(255)          not null,
     primary key (user_id)
 );
 create unique index UKdq442pqtqnv46d4p3mpn8ivpc on favorite_ski_resort (user_id, ski_resort_id);
