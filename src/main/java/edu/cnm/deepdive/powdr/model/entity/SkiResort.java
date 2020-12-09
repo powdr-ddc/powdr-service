@@ -67,6 +67,10 @@ public class SkiResort {
     return name;
   }
 
+  public void setName(@NonNull String name) {
+    this.name = name;
+  }
+
   /**
    * Gets the latitude of a {@link SkiResort}.
    * @return Returns a double of the latitude.
