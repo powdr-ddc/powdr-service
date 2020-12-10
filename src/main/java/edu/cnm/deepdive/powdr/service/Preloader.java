@@ -1,6 +1,8 @@
 package edu.cnm.deepdive.powdr.service;
 
+import edu.cnm.deepdive.powdr.model.dao.MessageRepository;
 import edu.cnm.deepdive.powdr.model.dao.SkiResortRepository;
+import edu.cnm.deepdive.powdr.model.entity.Message;
 import edu.cnm.deepdive.powdr.model.entity.SkiResort;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,14 +26,16 @@ public class Preloader implements CommandLineRunner {
 
   private static final String PRELOAD_DATA = "preload/resorts.csv";
 
-  private final SkiResortRepository repository;
+  private final SkiResortRepository resortRepository;
+  private final MessageRepository messageRepository;
 
   /**
    * Constructs an instance of Preloader.
    * @param repository A {@link SkiResortRepository} instance
    */
-  public Preloader(SkiResortRepository repository) {
-    this.repository = repository;
+  public Preloader(SkiResortRepository resortRepository, MessageRepository messageRepository) {
+    this.resortRepository = resortRepository;
+    this.messageRepository = messageRepository;
   }
 
   @Override
@@ -53,7 +57,15 @@ public class Preloader implements CommandLineRunner {
         skiResort.setLongitude(Double.parseDouble(record.get("longitude")));
         resorts.add(skiResort);
       }
-      repository.saveAll(resorts);
+      resortRepository.saveAll(resorts);
     }
+    List<Message> messages = new LinkedList<>();
+    Message sentMessage = new Message();
+    sentMessage.setContent("Hi, yes I'm stuck in a tree, can you call the Ski Patrol? I'm somewhere on the bunny slope...");
+    messages.add(sentMessage);
+    Message receiveMessage = new Message();
+    receiveMessage.setContent("I gotchu fam, they're on their way. Probably...");
+    messages.add(receiveMessage);
+    messageRepository.saveAll(messages);
   }
 }

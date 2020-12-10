@@ -132,7 +132,7 @@ public class UserController {
    * @return The image path connecting a user to an image.
    */
   @PutMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public User post(
+  public User putImage(
       @RequestParam MultipartFile file, Authentication auth) {
     try {
       return userService.store(file, (User) auth.getPrincipal());

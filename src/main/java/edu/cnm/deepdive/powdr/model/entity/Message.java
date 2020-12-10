@@ -5,7 +5,6 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -104,6 +103,14 @@ public class Message {
   @NonNull
   public String getContent() {
     return content;
+  }
+
+  /**
+   * Sets the contents of a specific {@link Message}.
+   * @param content the String body of a Message
+   */
+  public void setContent(@NonNull String content) {
+    this.content = content;
   }
 
   /**

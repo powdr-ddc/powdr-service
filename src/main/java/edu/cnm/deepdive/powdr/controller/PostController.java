@@ -3,23 +3,28 @@ package edu.cnm.deepdive.powdr.controller;
 import edu.cnm.deepdive.powdr.model.entity.Post;
 import edu.cnm.deepdive.powdr.model.entity.User;
 import edu.cnm.deepdive.powdr.service.PostService;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * REST Controller class for {@link Post} to receive parameter values taken from HTTP requests to
@@ -35,6 +40,7 @@ public class PostController {
 
   /**
    * Constructor for creating an instance of {@link PostService}
+   *
    * @param postService Reference to {@link PostService}
    */
   @Autowired
@@ -44,6 +50,7 @@ public class PostController {
 
   /**
    * Gets and displays posts gathered by a keyword.
+   *
    * @param keyword A word specified by the user to match related post.
    * @return Returns a list of posts related to a keyword.
    */
@@ -65,6 +72,7 @@ public class PostController {
 
   /**
    * Gets and displays all posts by a specified user.
+   *
    * @param auth The current authenticated user.
    * @return Returns a users list of posts.
    */
@@ -76,6 +84,7 @@ public class PostController {
 
   /**
    * Gets and displays posts by date posted.
+   *
    * @param timestamp The point in time that a post was created.
    * @return Returns a list of posts created on a certain date.
    */
@@ -87,6 +96,7 @@ public class PostController {
 
   /**
    * Gets or creates posts depending on whether or not they exist.
+   *
    * @param post ID of a specific user.
    * @param auth Current authenticated user.
    * @return Returns a {@link Post} object.
@@ -98,31 +108,31 @@ public class PostController {
     return postService.save(post, (User) auth.getPrincipal());
   }
 
-//  @PutMapping(value = "/{postId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-//      produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Post post(@PathVariable UUID postId, @RequestParam MultipartFile file, Authentication auth) {
-//    try {
-//      return postService.get(postId)
-//          .map((post) -> {
-//            if (post.getUser().getUserId().equals(((User) auth.getPrincipal()).getUserId())) {
-//              return post;
-//            } else {
-//              return null;
-//            }
-//          })
-//          .map((post) -> postService.store(file, post));
-//    } catch (IOException e) {
-//      throw new StorageException(e);
-//    } catch (HttpMediaTypeNotAcceptableException e) {
-//      throw new MimeTypeNotAllowedException();
-//    }
-//  }
+  @PutMapping(value = "/{postId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public Post post(@PathVariable UUID postId, @RequestParam MultipartFile file,
+      Authentication auth) {
+    return postService.get(postId)
+        .map((post) -> {
+          try {
+            if (post.getUser().getUserId().equals(((User) auth.getPrincipal()).getUserId())) {
+              return postService.store(file, post);
+            } else {
+              return null;
+            }
+          } catch (IOException | HttpMediaTypeNotAcceptableException e) {
+            return null;
+          }
+        })
+        .orElseThrow(NoSuchElementException::new);
+  }
 
 
   /**
    * Deletes posts specified by the user.
+   *
    * @param postId ID of a specific post.
-   * @param auth Current authenticated user.
+   * @param auth   Current authenticated user.
    */
   @DeleteMapping(value = "/{postId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
