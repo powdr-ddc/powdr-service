@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"edu.cnm.deepdive.powdr"},{"l":"edu.cnm.deepdive.powdr.configuration"},{"l":"edu.cnm.deepdive.powdr.controller"},{"l":"edu.cnm.deepdive.powdr.model.dao"},{"l":"edu.cnm.deepdive.powdr.model.entity"},{"l":"edu.cnm.deepdive.powdr.service"}]
